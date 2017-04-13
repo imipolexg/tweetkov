@@ -26,10 +26,11 @@ module.exports = function(ctx, done) {
   });
 }
 
-function parse_result(result, words, prefix=false) {
+function parse_result(result, words, prefix) {
   if (prefix) {
     words.push(result.prefix);
   }
+
   let randIndex = rand_index(result.suffix.length);
   let suffix = result.suffix[randIndex];
   words.push(suffix);
@@ -72,8 +73,8 @@ function add_words(db, cursor, words, callback) {
     if (!result) {
       add_random_words(db, words, callback);
     } else {
-      let cursor = parse_result(result, words)
-      add_words(db, cursor, words, callback)
+      let cursor = parse_result(result, words);
+      add_words(db, cursor, words, callback);
     }
   });
 }
